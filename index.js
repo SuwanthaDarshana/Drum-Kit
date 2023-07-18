@@ -1,26 +1,72 @@
-var randomNumber1 = Math.floor(Math.random() * 6) + 1;
-// randomNumber1 = Math.floor(randomNumber1*6)+1;
+//Detectingg button press
+var NumberOfDrumButton = document.querySelectorAll(".drum").length;
 
-var randomDiceImage = "dice"+ randomNumber1 +".png";
+for (var i = 0; i < NumberOfDrumButton; i++) {
+  document.querySelectorAll(".drum")[i].addEventListener("click", function () {
+    var buttonInnerHTML = this.innerHTML; //when clicked this inner html button
 
-var randomImageSource = "images/"+randomDiceImage;
+    makeSound(buttonInnerHTML);
 
-var image1 = document.querySelectorAll("img")[0];
+    buttonAnimation(buttonInnerHTML);
+  });
+}
 
-image1.setAttribute("src",randomImageSource);
+//Detecting keyboard press
+document.addEventListener("keypress", function (event) {
+  makeSound(event.key); //when key pressed
 
+  buttonAnimation(event.key);
+});
 
+function makeSound(key) {
+  switch (key) {
+    case "w":
+      var tom1 = new Audio("./sounds/tom-1.mp3");
+      tom1.play();
+      break;
 
-var randomNumber2 = Math.floor(Math.random()*6) + 1;
+    case "a":
+      var tom2 = new Audio("./sounds/tom-2.mp3");
+      tom2.play();
+      break;
 
-var randomImageSource2 = "images/dice" + randomNumber2 + ".png";
+    case "s":
+      var tom3 = new Audio("./sounds/tom-3.mp3");
+      tom3.play();
+      break;
 
-document.querySelectorAll("img")[1].setAttribute("src",randomImageSource2);
+    case "d":
+      var tom4 = new Audio("./sounds/tom-4.mp3");
+      tom4.play();
+      break;
 
-if(randomNumber1>randomNumber2) {
-    document.querySelector("h1").innerHTML = "Player 1 wins";;
-}else if (randomNumber2>randomNumber1){
-    document.querySelector("h1").innerHTML = "Player 2 wins";
-}else{
-    document.querySelector("h1").innerHTML = "Draw!";
+    case "j":
+      var snare = new Audio("./sounds/snare.mp3");
+      snare.play();
+      break;
+
+    case "k":
+      var crash = new Audio("./sounds/crash.mp3");
+      crash.play();
+      break;
+
+    case "l":
+      var kick = new Audio("./sounds/kick-bass.mp3");
+      kick.play();
+      break;
+
+    default:
+      break;
+  }
+}
+
+function buttonAnimation(currentKey) {
+  var activeButton = document.querySelector("." + currentKey);
+  activeButton.classList.add("pressed"); //pressed is a css claas
+
+  //time out function
+
+  setTimeout(function () {
+    activeButton.classList.remove("pressed");
+  }, 100);
 }
